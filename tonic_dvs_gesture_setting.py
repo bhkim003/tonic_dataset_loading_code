@@ -97,7 +97,7 @@ def data_loader(which_data, data_path, BATCH, IMAGE_SIZE, TIME, dvs_clipping, dv
                 'clipping': dvs_clipping,
                 'time': TIME,
                 'exclude_class': exclude_class,
-            }
+            } 
             settings_str = str(train_transform_settings)
             dataset_hash = hashlib.md5(settings_str.encode()).hexdigest()
             print(f'dataset_hash = {dataset_hash}')
