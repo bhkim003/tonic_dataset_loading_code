@@ -50,8 +50,7 @@ def data_loader(which_data, data_path, BATCH, IMAGE_SIZE, TIME, dvs_clipping, dv
             # 샘플 짜르기
             crop_max_time = 100_000 + extra_train_index*dvs_duration*(TIME+1) + dvs_duration*(TIME+1) + 100_000
             crop_min_time = 100_000 + extra_train_index*dvs_duration*(TIME+1)
-            train_compose.append(tonic.transforms.CropTime(max=crop_max_time))
-            train_compose.append(tonic.transforms.CropTime(min=crop_min_time))
+            train_compose.append(tonic.transforms.CropTime(min=crop_min_time, max=crop_max_time))
 
             # denoise 하기
             if denoise_on == True:
@@ -74,8 +73,7 @@ def data_loader(which_data, data_path, BATCH, IMAGE_SIZE, TIME, dvs_clipping, dv
                 test_compose.append(tonic.transforms.MergePolarities()) #polarity 없애기
             crop_max_time_test = 100_000 + dvs_duration*(TIME+1)
             crop_min_time_test = 100_000
-            test_compose.append(tonic.transforms.CropTime(max=crop_max_time_test))
-            test_compose.append(tonic.transforms.CropTime(min=crop_min_time_test))
+            test_compose.append(tonic.transforms.CropTime(min=crop_min_time_test, max=crop_max_time_test))
             if denoise_on == True:
                 test_compose.append(tonic.transforms.Denoise(filter_time=10_000)) # 10_000 # 낮을수록 더 많이 거름
             test_compose.append(tonic.transforms.Downsample(spatial_factor=IMAGE_SIZE/tonic.datasets.DVSGesture.sensor_size[0]))
@@ -146,8 +144,7 @@ def data_loader(which_data, data_path, BATCH, IMAGE_SIZE, TIME, dvs_clipping, dv
             compose.append(tonic.transforms.MergePolarities()) #polarity 없애기
 
         # 샘플 짜르기
-        compose.append(tonic.transforms.CropTime(max=(10_000 + dvs_duration*(TIME+1))+100_000))
-        compose.append(tonic.transforms.CropTime(min=(10_000)))
+        compose.append(tonic.transforms.CropTime(min=(10_000), max=(10_000 + dvs_duration*(TIME+1))+100_000))
 
         # denoise 하기
         if denoise_on == True:
