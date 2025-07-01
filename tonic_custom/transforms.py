@@ -88,7 +88,8 @@ class CropTime:
     def __call__(self, events):
         assert "t" in events.dtype.names
         if self.max is None:
-            self.max = np.max(events["t"])
+            return events[(events["t"] >= self.min)]
+            # self.max = np.max(events["t"])
         return events[(events["t"] >= self.min) & (events["t"] <= self.max)]
 
 
