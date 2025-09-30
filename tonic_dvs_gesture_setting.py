@@ -51,7 +51,9 @@ def data_loader(which_data, data_path, BATCH, IMAGE_SIZE, TIME, dvs_clipping, dv
             crop_max_time = 100_000 + extra_train_index*dvs_duration*(TIME+1) + dvs_duration*(TIME+1) + 100_000
             crop_min_time = 100_000 + extra_train_index*dvs_duration*(TIME+1)
             train_compose.append(tonic.transforms.CropTime(min=crop_min_time, max=crop_max_time))
-
+            # train_compose.append(tonic.transforms.CropTime(min=crop_min_time))
+            # train_compose.append(tonic.transforms.CropTime(max=crop_max_time))
+# 
             # denoise 하기
             if denoise_on == True:
                 train_compose.append(tonic.transforms.Denoise(filter_time=10_000)) # 10_000 # 낮을수록 더 많이 거름
@@ -279,7 +281,7 @@ for inputs, targets in train_loader:
     print("1st sample shape:", inputs[0].shape, '[time, channel, height, width]')  # 배치에서 첫 번째 샘플
 
     img0 = inputs[0][0][0].cpu().numpy()  # 첫 번째 이미지
-    img1 = inputs[0][0][1].cpu().numpy()  # 두 번째 이미지
+    img1 = inputs[0][0][1].cpu().numpy()  # 두 번째 채널 이미지
 
 
     plt.figure(figsize=(8, 4))

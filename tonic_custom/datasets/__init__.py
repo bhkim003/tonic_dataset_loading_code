@@ -7,6 +7,7 @@ from .hsd import SHD, SSC
 from .mvsec import MVSEC
 from .ncaltech101 import NCALTECH101
 from .nmnist import NMNIST
+from .ntidigits18 import NTIDIGITS18
 from .pokerdvs import POKERDVS
 from .s_mnist import SMNIST
 from .tum_vie import TUMVIE
@@ -29,4 +30,5 @@ __all__ = [
     "TUMVIE",
     "VPR",
     "DVSLip",
+    "NTIDIGITS18",
 ]
